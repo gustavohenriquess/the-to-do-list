@@ -8,8 +8,8 @@
 
 ### Users
 
-- [ ] Create User
-- [ ] Set User
+- [x] Create User
+- [x] Set User
 
 ### Lists
 
