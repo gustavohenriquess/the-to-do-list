@@ -2,7 +2,7 @@
 
 ## Features
 
-- [ ] Terminal interface
+- [x] Terminal interface
 - [ ] API Rest
 - [ ] Use Prisma.io
 
@@ -13,16 +13,16 @@
 
 ### Lists
 
-- [ ] Show Lists
-- [ ] Create List
-- [ ] Select List
-- [ ] Delete List
+- [x] Show Lists
+- [x] Create List
+- [x] Select List
+- [x] Delete List
 
 ### Tasks
 
-- [ ] Add Task
-- [ ] Change Done
-- [ ] Delete Task
+- [x] Add Task
+- [x] Change Done
+- [x] Delete Task
 
 ## Docs
 

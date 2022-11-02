@@ -1,15 +1,11 @@
 import readline from "readline";
 import { User, hasUser, hasList } from "./domain/User";
+import { List } from "./domain/List";
 const menuOptions = ["Exit", "Create User", "Set User"];
 const taskOptions = ["Return", "Add task", "Change done", "Delete task"];
-const listOptions = [
-  "Exit",
-  "Show Lists",
-  "Select List",
-  "Add Lists",
-  "Delete Lists",
-];
+const listOptions = ["Exit", "Add Lists", "Select List", "Delete Lists"];
 let userId: string;
+let lastUserCreated: string;
 let listId: number;
 
 const rl = readline.createInterface({
@@ -21,8 +17,18 @@ rl.on("close", function () {
   process.exit(0);
 });
 
+function clearTerminal() {
+  process.stdout.write("\u001B[2J\u001B[0;0f");
+}
+
 function start() {
+  clearTerminal();
+  if (lastUserCreated)
+    console.log(`User Created \nSave your userId: ${lastUserCreated} \n`);
+
+  console.log("/********** MENU **********/");
   console.table(menuOptions);
+
   rl.question("Select an option: ", (answer) => {
     switch (answer) {
       case "0":
@@ -43,9 +49,9 @@ function start() {
 
 function createUser() {
   rl.question("Enter user name: ", (answer) => {
-    const user = User.create({ name: answer });
-    console.log("User created");
-    console.log(`Save your id: ${user.id}`);
+    const user = User.create(answer);
+
+    lastUserCreated = user.id;
     start();
   });
 }
@@ -62,23 +68,30 @@ function setUser() {
   });
 }
 
-function listMenu() {
+function listMenu(clear = true) {
+  if (clear) clearTerminal();
+
+  const user = User.selectUser(userId);
+  console.log("\n/********** LISTS **********/");
+  if (user?.lists && user.lists.length != 0)
+    console.table(user.lists.map((list) => list.name));
+  else console.log("No lists");
+
+  console.log("\n/********** MENU LIST **********/");
   console.table(listOptions);
+
   rl.question("Select an option: ", (answer) => {
     switch (answer) {
       case "0":
         rl.close();
         break;
       case "1":
-        showLists();
+        addList();
         break;
       case "2":
         selectList();
         break;
       case "3":
-        addList();
-        break;
-      case "4":
         deleteList();
         break;
       default:
@@ -86,12 +99,6 @@ function listMenu() {
         listMenu();
     }
   });
-}
-
-function showLists() {
-  const user = User.selectUser(userId);
-  console.table(user?.lists);
-  listMenu();
 }
 
 function selectList() {
@@ -107,24 +114,45 @@ function selectList() {
 }
 
 function addList() {
+  clearTerminal();
   rl.question("Enter list name: ", (answer) => {
+    const user = User.selectUser(userId);
+    const list = List.create(answer);
+    user?.addList(list);
+    clearTerminal();
+
     console.log("List added");
-    listMenu();
+    listMenu(false);
   });
 }
 
 function deleteList() {
   rl.question("Enter list id: ", (answer) => {
+    const user = User.selectUser(userId);
+    user?.deleteList(parseInt(answer));
+    clearTerminal();
     console.log("List deleted");
-    listMenu();
+    listMenu(false);
   });
 }
 
-function taskMenu() {
+function taskMenu(clear = true) {
+  if (clear) clearTerminal();
+
+  const user = User.selectUser(userId);
+  if (user) {
+    console.log(`\n/********** ${user.lists[listId].name} **********/`);
+    if (user.lists[listId].tasks.length != 0)
+      console.table(user.lists[listId].tasks);
+    else console.log("No tasks");
+  }
+
+  console.log("\n/********** MENU TASKS **********/");
   console.table(taskOptions);
   rl.question("Select an option: ", (answer) => {
     switch (answer) {
       case "0":
+        listId = -1;
         listMenu();
         break;
       case "1":
@@ -144,22 +172,33 @@ function taskMenu() {
 }
 
 function addTask() {
+  clearTerminal();
   rl.question("Enter task name: ", (answer) => {
+    const user = User.selectUser(userId);
+    const list = user?.getList(listId);
+    list?.addTask(answer);
+
     console.log("Task added");
-    taskMenu();
+    taskMenu(false);
   });
 }
 
 function changeDone() {
   rl.question("Enter task id: ", (answer) => {
-    console.log("Task done");
+    const user = User.selectUser(userId);
+    const list = user?.getList(listId);
+    list?.doneTask(parseInt(answer));
+
     taskMenu();
   });
 }
 
 function deleteTask() {
   rl.question("Enter task id: ", (answer) => {
-    console.log("Task done");
+    const user = User.selectUser(userId);
+    const list = user?.getList(listId);
+    list?.deleteTask(parseInt(answer));
+
     taskMenu();
   });
 }

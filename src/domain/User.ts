@@ -4,7 +4,7 @@ import { List } from "./List";
 const users: Map<string, user> = new Map();
 
 export class User {
-  protected readonly _user: user;
+  protected _user: user;
   protected readonly _id: string;
 
   constructor(_user: user, _id?: string) {
@@ -13,8 +13,8 @@ export class User {
 
     users.set(this._id, _user);
   }
-  static create(user: user, id?: string) {
-    return new this(user, id);
+  static create(name: string, id?: string) {
+    return new this({ name, lists: [] }, id);
   }
 
   static selectUser(id: string) {
@@ -38,11 +38,23 @@ export class User {
 
     return id;
   }
+
+  addList(list: List) {
+    this._user.lists.push(list);
+  }
+
+  getList(index: number) {
+    return this._user.lists[index];
+  }
+
+  deleteList(index: number) {
+    this._user.lists.splice(index, 1);
+  }
 }
 
 type user = {
   name: string;
-  lists?: List[];
+  lists: List[];
 };
 
 export function hasUser(userId: string) {
