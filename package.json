@@ -19,5 +19,8 @@
   },
   "scripts": {
     "commit": "yarn git-cz"
+  },
+  "dependencies": {
+    "typescript": "^4.8.4"
   }
 }
