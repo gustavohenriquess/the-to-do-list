@@ -31,13 +31,17 @@
 ## Terminal
 
 - Creating user
-  [Create user](./assets/1%20-%20Create%20user.png)
+
+  ![Create user](./assets/1%20-%20Create%20user.png)
 
 - Set user
-  [Set user](./assets/2%20-%20Set%20user.png)
+
+  ![Set user](./assets/2%20-%20Set%20user.png)
 
 - List menu
-  [List menu](./assets/3%20-%20List%20menu.png)
+
+  ![List menu](./assets/3%20-%20List%20menu.png)
 
 - Task menu
-  [Task menu](./assets/4%20-%20Task%20menu.png)
+
+  ![Task menu](./assets/4%20-%20Task%20menu.png)
