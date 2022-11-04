@@ -31,7 +31,8 @@ export class User {
   }
 
   private generateId() {
-    const id = randomUUID().slice(-4);
+    // const id = randomUUID().slice(-4);
+    const id = randomUUID();
     while (hasUser(id)) {
       this.generateId();
     }

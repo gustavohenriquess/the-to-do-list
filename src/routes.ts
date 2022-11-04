@@ -1,8 +1,13 @@
 import express from "express";
+import { CreateUserUseCase } from "./use-cases/create-user.use-case";
 
 const router = express.Router();
 
-router.post("/account", (req, res) => {});
+router.post("/account", (req, res) => {
+  const { name } = req.body;
+  const accountId = CreateUserUseCase.execute(name);
+  res.json({ accountId });
+});
 
 router.get("/:accountId/list", (req, res) => {});
 router.post("/:accountId/list", (req, res) => {});
