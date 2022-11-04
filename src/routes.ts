@@ -1,4 +1,5 @@
 import express from "express";
+import { UserListsUseCase } from "./use-cases/user-lists-use-case";
 import { CreateUserUseCase } from "./use-cases/create-user.use-case";
 
 const router = express.Router();
@@ -9,7 +10,12 @@ router.post("/account", (req, res) => {
   res.json({ accountId });
 });
 
-router.get("/:accountId/list", (req, res) => {});
+router.get("/:accountId/list", (req, res) => {
+  const { accountId } = req.params;
+  const lists = UserListsUseCase.execute(accountId);
+  res.json(lists);
+});
+
 router.post("/:accountId/list", (req, res) => {});
 router.delete("/:accountId/list/:listId", (req, res) => {});
 
