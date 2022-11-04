@@ -21,6 +21,7 @@
     "commit": "yarn git-cz"
   },
   "dependencies": {
+    "express": "^4.18.2",
     "typescript": "^4.8.4"
   }
 }
