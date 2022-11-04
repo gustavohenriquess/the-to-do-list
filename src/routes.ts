@@ -4,6 +4,7 @@ import { CreateUserUseCase } from "./use-cases/create-user.use-case";
 import { CreateListUseCase } from "./use-cases/create-list.use-case";
 import { DeleteListUseCase } from "./use-cases/delete-list.use-case";
 import { CreateTaskUseCase } from "./use-cases/create-task.use-case";
+import { ListTasksUseCase } from "./use-cases/list-tasks.use-case";
 
 const router = express.Router();
 
@@ -39,7 +40,12 @@ router.post("/:userId/list/:listId/task", (req, res) => {
 
   res.status(200).send();
 });
-router.get("/:userId/list/:listId/task", (req, res) => {});
+router.get("/:userId/list/:listId/task", (req, res) => {
+  const { userId, listId } = req.params;
+  const tasks = ListTasksUseCase.execute(userId, parseInt(listId));
+
+  res.json(tasks);
+});
 router.put("/:userId/list/:listId/task/:taskId/name", (req, res) => {});
 router.put("/:userId/list/:listId/task/:taskId/done", (req, res) => {});
 router.delete("/:userId/list/:listId/task/:taskId", (req, res) => {});
