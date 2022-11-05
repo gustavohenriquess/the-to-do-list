@@ -25,13 +25,13 @@ router.post("/:userId/list", (req, res) => {
   const { userId } = req.params;
   const { name } = req.body;
   CreateListUseCase.execute(userId, name);
-  res.status(200).send();
+  res.status(204).send();
 });
 
 router.delete("/:userId/list/:listId", (req, res) => {
   const { userId, listId } = req.params;
   DeleteListUseCase.execute(userId, parseInt(listId));
-  res.status(200).send();
+  res.status(204).send();
 });
 
 router.post("/:userId/list/:listId/task", (req, res) => {
@@ -39,7 +39,7 @@ router.post("/:userId/list/:listId/task", (req, res) => {
   const { name } = req.body;
   CreateTaskUseCase.execute(userId, parseInt(listId), name);
 
-  res.status(200).send();
+  res.status(204).send();
 });
 router.get("/:userId/list/:listId/task", (req, res) => {
   const { userId, listId } = req.params;
@@ -54,7 +54,7 @@ router.delete("/:userId/list/:listId/task/:taskId", (req, res) => {
   const { userId, listId, taskId } = req.params;
   DeleteTaskUseCase.execute(userId, parseInt(listId), parseInt(taskId));
 
-  res.status(200).send();
+  res.status(204).send();
 });
 
 export { router };
