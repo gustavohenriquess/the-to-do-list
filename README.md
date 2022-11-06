@@ -200,3 +200,21 @@ NO BODY
 **Response:**
 
 Status: **204 - No Content**
+
+--
+
+Method: **PUT**
+
+Route: **_:userId_**/list/**_:listId_**/task/**_:taskId_**/name
+
+**Body:**
+
+```
+{
+	"name": "New Task Name"
+}
+```
+
+**Response:**
+
+Status: **204 - No Content**

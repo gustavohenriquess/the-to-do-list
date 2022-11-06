@@ -21,6 +21,10 @@ export class List {
     this._props.tasks[index].done = !this._props.tasks[index].done;
   }
 
+  updateTaskName(index: number, name: string) {
+    this._props.tasks[index].name = name;
+  }
+
   get name() {
     return this._props.name;
   }
